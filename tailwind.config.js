@@ -11,6 +11,10 @@ module.exports = {
       'brown': '#C9ADA7',
       'offwhite': '#F2E9E4',
     },
+    fontFamily: {
+      body: ['Roboto', 'sans-serif'],
+      title: ['Comfortaa', 'cursive'],
+    },
     extend: {},
   },
   plugins: [],
