@@ -1,5 +1,5 @@
-import Header from "./SignInHeader";
-import SignInHeader from "./SignInHeader"
+import Header from "./Headers/SignInHeader";
+import SignInHeader from "./Headers/SignInHeader"
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
@@ -7,6 +7,7 @@ import 'firebase/compat/auth'
 
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
+
 
 firebase.initializeApp({
 
@@ -28,10 +29,9 @@ const auth = firebase.auth();
 const firestore = firebase.firestore();
 
 function App() {
-  const [user] = useAuthState(auth)
   return (
     <div className="App">
-      {user ? <Header /> : <SignInHeader />}
+      <SignInHeader />
     </div>
   );
 }
