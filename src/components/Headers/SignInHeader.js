@@ -9,11 +9,12 @@ import { useState } from 'react'
 import SignupPopup from "../Popups/SignupPopup";
 import SigninPopup from '../Popups/SigninPopup'
 
-function Header() {
+function SignInHeader(props) {
 
     const [isShown, setIsShown] = useState(false);
     const [isSignup, setIsSignup] = useState(false);
     const [isSignin, setIsSignin] = useState(false);
+
     const handleClick = event => {
         setIsShown(current => !current);
     };
@@ -48,9 +49,9 @@ function Header() {
                     <img src={downIcon} alt='Profile' className='h-5 '></img>
                 </div>
             </div>
-            {isShown && (<Dropdown signIn={signIn} />)}
-            {isSignin && (<SigninPopup signIn={signIn} />)}
-            {isSignup && (<SignupPopup signUp={signUp} />)}
+            {isShown && (<Dropdown isSignin={isSignin} />)}
+            {isSignin && (<SigninPopup signIn={signIn} setLoginEmail={props.setLoginEmail} setLoginPassword={props.setLoginPassword} login={props.login} />)}
+            {isSignup && (<SignupPopup signUp={signUp} setRegisterEmail={props.setRegisterEmail} setRegisterPassword={props.setRegisterPassword} createUser={props.createUser} />)}
         </div>
     );
 }
@@ -62,13 +63,12 @@ function Dropdown(props) {
                 <img className='h-12 w-12 invert' alt='profile' src={infoIcon}></img>
                 <h2>About Fakeit</h2>
             </div>
-            <div className='w-48 h-12 pl-4 mt-4 mb-4 flex items-center  hover:cursor-pointer hover:bg-brown hover:bg-opacity-10' onClick={props.signIn}>
+            <div className='w-48 h-12 pl-4 mt-4 mb-4 flex items-center  hover:cursor-pointer hover:bg-brown hover:bg-opacity-10' onClick={props.isSignin}>
                 <img className='h-12 w-12 invert' alt='profile' src={loginIcon}></img>
                 <h2>Sign In</h2>
             </div>
-
         </div>
     )
 }
 
-export default Header;
+export default SignInHeader;

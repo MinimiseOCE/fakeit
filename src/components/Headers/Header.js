@@ -7,13 +7,12 @@ import createIcon from '../assets/icons/createIcon.svg'
 import logoutIcon from '../assets/icons/logoutIcon.svg'
 import { useState } from 'react'
 
-function Header() {
+function Header(props) {
 
     const [isShown, setIsShown] = useState(false);
 
     const handleClick = event => {
         setIsShown(current => !current);
-
     };
 
 
@@ -28,17 +27,18 @@ function Header() {
                 <input className='bg-navy h-6 text-offwhite placeholder:text-offwhite placeholder:text-opacity-80 focus:border-offwhite' placeholder='Search Fakeit'></input>
             </form>
             <div className='flex mr-8 gap-8 items-center'>
+                <div className='text-offwhite'>{props.user?.email}</div>
                 <div className='flex pr-2 w-20 h-10 rounded-lg hover:cursor-pointer items-center hover:border-solid hover:border-2 hover:border-offwhite hover:border-opacity-20 ' onClick={handleClick}>
                     <img src={userIcon} alt='Profile' className='h-12 invert '></img>
                     <img src={downIcon} alt='Profile' className='h-5 '></img>
                 </div>
             </div>
-            {isShown && (<Dropdown />)}
+            {isShown && (<Dropdown logout={props.logout} handleClick={handleClick} />)}
         </div>
     );
 }
 
-function Dropdown() {
+function Dropdown(props) {
     return (
         <div className='absolute right-4 top-16 flex flex-col justify-start items-center bg-navy border-2 shadow-lg border-solid border-offwhite text-offwhite'>
             <div className='w-48 h-12 pl-4 mt-4 flex items-center hover:cursor-pointer hover:bg-brown hover:bg-opacity-10'>
@@ -53,7 +53,7 @@ function Dropdown() {
                 <img className='h-12 w-12 invert' alt='profile' src={createIcon}></img>
                 <h2>Create A Community</h2>
             </div>
-            <div className='w-48 h-12 pl-4 mt-4 mb-4 flex items-center  hover:cursor-pointer hover:bg-brown hover:bg-opacity-10'>
+            <div onClick={() => { props.logout(); props.handleClick() }} className='w-48 h-12 pl-4 mt-4 mb-4 flex items-center  hover:cursor-pointer hover:bg-brown hover:bg-opacity-10'>
                 <img className='h-12 w-12 invert' alt='profile' src={logoutIcon}></img>
                 <h2>Log Out</h2>
             </div>
