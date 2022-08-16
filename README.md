@@ -18,7 +18,14 @@ view and interact with content at real time
 
 ## Stack Used
 
-### HTML
-### Tailwind
-### React
-### Firebase
+### HTML 
+<img src="https://cdn-icons-png.flaticon.com/512/174/174854.png" alt="drawing" height="50"/>
+
+### Tailwind 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2048px-Tailwind_CSS_Logo.svg.png" alt="drawing" height="50"/>
+
+### React 
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/2300px-React-icon.svg.png" alt="drawing" height="50"/>
+
+### Firebase 
+<img src="https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-2-512.png" alt="drawing" height="50"/>
