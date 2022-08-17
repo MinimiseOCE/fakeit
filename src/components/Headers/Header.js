@@ -17,7 +17,7 @@ function Header(props) {
 
 
     return (
-        <div className="w-screen bg-navy h-14 flex items-center justify-between border-b-2 shadow-lg border-solid border-offwhite">
+        <div className="mw-screen bg-navy h-14 flex items-center justify-between border-b-2 shadow-lg border-solid border-offwhite">
             <div className='flex ml-5 gap-1 items-center hover:cursor-pointer'>
                 <img src={icon} alt='Logo' className='h-9'></img>
                 <h1 className="text-offwhite text-2xl font-title">fakeit</h1>
