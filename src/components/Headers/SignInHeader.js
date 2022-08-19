@@ -39,7 +39,7 @@ function SignInHeader(props) {
                 <img src={icon} alt='Logo' className='w-9'></img>
                 <h1 className="text-offwhite text-xl font-title hidden md:block">fakeit</h1>
             </div>
-            <form className='flex h-8 w- items-center border-solid border-2 border-offwhite border-opacity-90 rounded-md hover:border-opacity-100 md:pr-64 active:border-opacity-100'>
+            <form className='flex h-8 items-center border-solid border-2 border-offwhite border-opacity-90 rounded-md hover:border-opacity-100 md:pr-64 active:border-opacity-100'>
                 <img className='h-10 opacity-80' src={searchIcon} alt='Search'  ></img>
                 <input className='bg-navy w-16 text-offwhite placeholder:text-offwhite placeholder:text-opacity-80 focus:border-offwhite' placeholder='Search'></input>
             </form>

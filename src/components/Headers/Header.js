@@ -20,18 +20,15 @@ function Header(props) {
         <div className="mw-screen bg-navy h-14 flex items-center justify-between border-b-2 shadow-lg border-solid border-offwhite">
             <div className='flex ml-5 gap-1 items-center hover:cursor-pointer'>
                 <img src={icon} alt='Logo' className='h-9'></img>
-                <h1 className="text-offwhite text-2xl font-title">fakeit</h1>
+                <h1 className="text-offwhite text-2xl font-title hidden md:block">fakeit</h1>
             </div>
-            <form className='flex h-8 items-center border-solid border-2 border-offwhite border-opacity-90 rounded-md pr-64 hover:border-opacity-100 active:border-opacity-100'>
-                <img className='h-16 opacity-80' src={searchIcon} alt='Search'  ></img>
-                <input className='bg-navy h-6 text-offwhite placeholder:text-offwhite placeholder:text-opacity-80 focus:border-offwhite' placeholder='Search Fakeit'></input>
+            <form className='flex h-8 items-center border-solid border-2 border-offwhite border-opacity-90 rounded-md md:pr-64 hover:border-opacity-100 active:border-opacity-100'>
+                <img className='h-10 md:16 opacity-80' src={searchIcon} alt='Search'  ></img>
+                <input className='bg-navy h-6 w-16 md:w-64 text-offwhite placeholder:text-offwhite placeholder:text-opacity-80 placeholder:text-xs md:placeholder:text-sm focus:border-offwhite' placeholder='Search Fakeit'></input>
             </form>
-            <div className='flex mr-8 gap-8 items-center'>
-                <div className='text-offwhite'>{props.user?.email}</div>
-                <div className='flex pr-2 w-20 h-10 rounded-lg hover:cursor-pointer items-center hover:border-solid hover:border-2 hover:border-offwhite hover:border-opacity-20 ' onClick={handleClick}>
-                    <img src={userIcon} alt='Profile' className='h-12 invert '></img>
-                    <img src={downIcon} alt='Profile' className='h-5 '></img>
-                </div>
+            <div className='flex md:mr-8 mr-1 gap-1 hover:cursor-pointer items-center p-1 hover:border-2 hover:border-solid hover:border-offwhite' onClick={handleClick}>
+                <img src={props.user?.photoURL} alt='profile pic' className='w-8 h-8'></img>
+                <div className='text-offwhite'>{props.user?.displayName}</div>
             </div>
             {isShown && (<Dropdown logout={props.logout} handleClick={handleClick} />)}
         </div>

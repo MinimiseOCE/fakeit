@@ -6,16 +6,20 @@ import {
   signOut
 } from "firebase/auth";
 import SignInHeader from "./Headers/SignInHeader";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { updateProfile } from "firebase/auth";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+
 import Header from "./Headers/Header"
-
-
+import MakeUsername from "./Popups/MakeUsername";
+import placeholder from './assets/images/placeholder.jpg'
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   const [headerType, switchHeader] = useState(false);
 
@@ -24,9 +28,7 @@ function App() {
   useEffect(() => {
 
     onAuthStateChanged(auth, (currentUser) => {
-
       setUser(currentUser);
-
     });
 
     if (!user) {
@@ -35,14 +37,25 @@ function App() {
     if (user) {
       switchHeader(true)
     }
-
-
-
   }, [user])
 
   const register = async () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+      updateProfile(auth.currentUser, {
+        photoURL: "https://www.pngkey.com/png/full/73-730477_first-name-profile-image-placeholder-png.png"
+      })
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const makeUsername = async () => {
+    try {
+      updateProfile(auth.currentUser, {
+        displayName: displayName
+      })
       console.log(user)
     } catch (error) {
       console.log(error.message)
@@ -57,6 +70,7 @@ function App() {
       console.log(error.message)
     }
   }
+
   const logout = async () => {
     await signOut(auth)
   }
@@ -69,6 +83,7 @@ function App() {
       {!headerType && (<SignInHeader setRegisterEmail={setRegisterEmail} setRegisterPassword={setRegisterPassword} setLoginEmail={setLoginEmail} setLoginPassword={setLoginPassword}
         createUser={register} login={login} />)}
       {headerType && (<Header user={user} logout={logout} />)}
+      {(user && !user?.displayName) && (< MakeUsername setDisplayName={setDisplayName} makeUsername={makeUsername} />)}
     </div>
   );
 }
