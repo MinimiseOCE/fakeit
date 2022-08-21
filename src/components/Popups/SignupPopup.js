@@ -13,8 +13,6 @@ export default function SignupPopup(props) {
                 placeholder='Email' onChange={(event) => { props.setRegisterEmail(event.target.value) }}>
               </input>
               <input className='h-10 w-32 md:w-64 bg-light-purple border-navy border-2 border-solid rounded-lg shadow-lg placeholder:text-offwhite placeholder:opacity-80 pl-4'
-                placeholder='Username' ></input>
-              <input className='h-10 w-32 md:w-64 bg-light-purple border-navy border-2 border-solid rounded-lg shadow-lg placeholder:text-offwhite placeholder:opacity-80 pl-4'
                 placeholder='Password' type='password' onChange={(event) => { props.setRegisterPassword(event.target.value) }}></input>
               <input className='h-10 w-32 md:w-64 bg-light-purple border-navy border-2 border-solid rounded-lg shadow-lg placeholder:text-offwhite placeholder:opacity-80 pl-4' type='password' placeholder='Confirm Pass'></input>
               <button className='h-10 bg-navy border-solid border-2 border-x-light-blue rounded-full text-offwhite shadow-lg'

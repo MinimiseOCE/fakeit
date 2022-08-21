@@ -12,7 +12,7 @@ export default function SigninPopup(props) {
               <input className='h-10 mt-4 bg-light-purple w-32 md:w-64 border-navy border-2 border-solid rounded-lg shadow-lg placeholder:text-offwhite placeholder:opacity-80  pl-4'
                 placeholder='Email' onChange={(event) => { props.setLoginEmail(event.target.value) }}></input>
               <input className='h-10 bg-light-purple w-32 md:w-64 border-navy border-2 border-solid rounded-lg shadow-lg placeholder:text-offwhite placeholder:opacity-80 pl-4'
-                placeholder='Password' onChange={(event) => { props.setLoginPassword(event.target.value) }}></input>
+                placeholder='Password' type='password' onChange={(event) => { props.setLoginPassword(event.target.value) }}></input>
               <button className='h-10 bg-navy border-solid border-2 border-x-light-blue rounded-full text-offwhite shadow-lg' onClick={() => { props.login(); props.signIn() }}>Log in!</button>
               <p onClick={props.signUp} className="mb-2 text-center underline cursor-pointer text-light-blue">Sign up?</p>
             </div>

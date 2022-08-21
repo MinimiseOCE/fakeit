@@ -3,16 +3,14 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signOut
+  signOut,
 } from "firebase/auth";
 import SignInHeader from "./Headers/SignInHeader";
-import { auth, db } from "../firebase";
+import { auth } from "../firebase";
 import { updateProfile } from "firebase/auth";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-
-import Header from "./Headers/Header"
+import Header from "./Headers/Header";
 import MakeUsername from "./Popups/MakeUsername";
-import placeholder from './assets/images/placeholder.jpg'
+import placeholder from "./assets/images/placeholder.jpg";
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -23,67 +21,78 @@ function App() {
 
   const [headerType, switchHeader] = useState(false);
 
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-
     onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
 
     if (!user) {
-      switchHeader(false)
+      switchHeader(false);
     }
     if (user) {
-      switchHeader(true)
+      switchHeader(true);
     }
-  }, [user])
+  }, [user]);
 
   const register = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
-      updateProfile(auth.currentUser, {
-        photoURL: "https://www.pngkey.com/png/full/73-730477_first-name-profile-image-placeholder-png.png"
-      })
-
+      await createUserWithEmailAndPassword(
+        auth,
+        registerEmail,
+        registerPassword
+      );
+      updateProfile(auth.currentUser, { photoURL: { placeholder } });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const makeUsername = async () => {
     try {
-      updateProfile(auth.currentUser, {
-        displayName: displayName
-      })
-      console.log(user)
+      updateProfile(auth.currentUser, { displayName: displayName });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const login = async () => {
     try {
-      const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      console.log(user)
+      const user = await signInWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      console.log(user);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const logout = async () => {
-    await signOut(auth)
-  }
-
-
-
+    await signOut(auth);
+  };
 
   return (
     <div className="App">
-      {!headerType && (<SignInHeader setRegisterEmail={setRegisterEmail} setRegisterPassword={setRegisterPassword} setLoginEmail={setLoginEmail} setLoginPassword={setLoginPassword}
-        createUser={register} login={login} />)}
-      {headerType && (<Header user={user} logout={logout} />)}
-      {(user && !user?.displayName) && (< MakeUsername setDisplayName={setDisplayName} makeUsername={makeUsername} />)}
+      {!headerType && (
+        <SignInHeader
+          setRegisterEmail={setRegisterEmail}
+          setRegisterPassword={setRegisterPassword}
+          setLoginEmail={setLoginEmail}
+          setLoginPassword={setLoginPassword}
+          createUser={register}
+          login={login}
+        />
+      )}
+      {headerType && <Header user={user} logout={logout} />}
+      {user && !user?.displayName && (
+        <MakeUsername
+          setDisplayName={setDisplayName}
+          makeUsername={makeUsername}
+        />
+      )}
     </div>
   );
 }
