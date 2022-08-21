@@ -27,7 +27,7 @@ function Header(props) {
           fakeit
         </h1>
       </div>
-      <form className="flex items-center h-8 rounded-md border-2 border-opacity-90 border-solid border-offwhite md:pr-64 hover:border-opacity-100 active:border-opacity-100">
+      <form className="flex items-center pr-16 h-8 rounded-md border-2 border-opacity-90 border-solid border-offwhite md:pr-64 hover:border-opacity-100 active:border-opacity-100">
         <img
           className="h-10 opacity-80 md:16"
           src={searchIcon}
