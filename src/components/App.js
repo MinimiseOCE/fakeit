@@ -13,6 +13,7 @@ import MakeUsername from "./Popups/MakeUsername";
 import CreatePost from "./Create/CreatePost";
 import imageIcon from "./assets/icons/imageIcon.svg";
 import linkIcon from "./assets/icons/linkIcon.svg";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -51,7 +52,8 @@ function App() {
         registerPassword
       );
       updateProfile(auth.currentUser, {
-        photoURL: "./assets/images/placeholder.jpg",
+        photoURL:
+          "https://firebasestorage.googleapis.com/v0/b/fakeit-d9bac.appspot.com/o/pfp%2Fplaceholder.jpg?alt=media&token=59c7b297-0be1-4ecb-9ca4-ad7aa8fb2842",
       });
     } catch (error) {
       console.log(error.message);
@@ -103,12 +105,19 @@ function App() {
           makeUsername={makeUsername}
         />
       )}
-      {hideCreatePost && (
-        <CreatePost username={user.displayName} hide={hideCreate} />
-      )}
-      <div className="flex flex-col gap-4 items-center mt-4 w-screen -z-10">
-        {headerType && <AddPost pic={user?.photoURL} hideCreate={hideCreate} />}
-      </div>
+      {hideCreatePost && <CreatePost user={user} hide={hideCreate} />}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="flex flex-col gap-4 items-center mt-4 w-screen -z-10">
+              {headerType && (
+                <AddPost pic={user?.photoURL} hideCreate={hideCreate} />
+              )}
+            </div>
+          }
+        />
+      </Routes>
     </div>
   );
 }
@@ -118,7 +127,7 @@ export default App;
 function AddPost(props) {
   return (
     <div className="flex gap-2 items-center p-2 w-screen rounded-md border-2 border-opacity-90 border-solid md:w-1/4 border-offwhite bg-navy">
-      <img src={props.pic} className="w-8 h-8"></img>
+      <img src={props.pic} className="w-8 h-8 rounded-lg"></img>
       <input
         className="w-96 h-10 rounded-md border-2 border-opacity-90 border-solid bg-navy md:w-96 border-offwhite hover:border-opacity-100 active:border-opacity-100 text-offwhite placeholder:text-offwhite placeholder:text-opacity-80 placeholder:text-sm md:placeholder:text-base focus:border-offwhite hover:cursor-pointer"
         placeholder="  Create Post"

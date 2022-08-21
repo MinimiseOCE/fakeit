@@ -45,7 +45,7 @@ function Header(props) {
         <img
           src={props.user?.photoURL}
           alt="profile pic"
-          className="w-8 h-8"
+          className="w-8 h-8 rounded-lg"
         ></img>
         <div className="text-offwhite">{props.user?.displayName}</div>
       </div>

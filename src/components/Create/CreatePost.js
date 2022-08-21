@@ -19,20 +19,25 @@ export default function CreatePost(props) {
       newArr.push(doc.id);
     });
     setOptions(newArr);
-    setSub(options[0]);
+    setSub(newArr[0]);
   }
   // Set Post Data
   const postData = {
-    title: title,
+    title: title.replace(/\s/g, ""),
     bodyText: body,
-    dateMade: new Date(),
-    author: props.username,
+    dateMade: Date.now(),
+    postedOn: new Date(),
+    author: props.user.displayName,
     subreddit: sub,
   };
 
   const makePost = async () => {
     try {
-      await setDoc(doc(db, "posts", title + postData.dateMade), postData);
+      console.log(postData);
+      await setDoc(
+        doc(db, "posts", title.replace(/\s/g, "-") + postData.dateMade),
+        postData
+      );
       props.hide();
     } catch (error) {
       console.log(error);
