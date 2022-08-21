@@ -13,7 +13,7 @@ export default function CreateSubreddit(props) {
       if (!docSnap.exists()) {
         await setDoc(doc(db, "subs", subData.subName), subData);
         setError("");
-        props.handleClick();
+        props.hide();
       } else {
         setError("Name already taken");
       }
@@ -28,8 +28,8 @@ export default function CreateSubreddit(props) {
   };
 
   return (
-    <div className="absolute top-0 w-screen h-screen -z-10">
-      <div className="flex sticky justify-center items-center w-screen h-screen">
+    <div className="absolute top-0 z-10 w-screen h-screen">
+      <div className="flex sticky justify-center items-center w-screen h-screen backdrop-blur-md backdrop-brightness-50">
         <div className="flex flex-col justify-between w-64 h-80 border-2 border-solid md:w-1/4 md:h-3/4 bg-navy border-offwhite">
           <div className="flex flex-col gap-4 p-4 md:gap-8">
             <div className="border-b-2 border-solid border-offwhite">
@@ -59,7 +59,7 @@ export default function CreateSubreddit(props) {
           <div className="flex justify-around items-center w-full h-1/6 md:h-1/6 bg-light-blue">
             <button
               className="p-1 pr-4 pl-4 h-10 text-sm rounded-full md:h-16 md:pr-14 md:pl-14 md:text-lg text-navy bg-offwhite hover:bg-opacity-90"
-              onClick={props.handleClick}
+              onClick={props.hide}
             >
               Cancel
             </button>

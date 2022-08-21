@@ -58,7 +58,7 @@ function Header(props) {
       )}
       {showCreate && (
         <CreateSubreddit
-          handleClick={hideCreateSubreddit}
+          hide={hideCreateSubreddit}
           username={props.user.displayName}
         />
       )}

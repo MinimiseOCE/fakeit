@@ -10,7 +10,9 @@ import { auth } from "../firebase";
 import { updateProfile } from "firebase/auth";
 import Header from "./Headers/Header";
 import MakeUsername from "./Popups/MakeUsername";
-import placeholder from "./assets/images/placeholder.jpg";
+import CreatePost from "./Create/CreatePost";
+import imageIcon from "./assets/icons/imageIcon.svg";
+import linkIcon from "./assets/icons/linkIcon.svg";
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -18,6 +20,11 @@ function App() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [hideCreatePost, sethideCreatePost] = useState(false);
+
+  const hideCreate = (event) => {
+    sethideCreatePost((current) => !current);
+  };
 
   const [headerType, switchHeader] = useState(false);
 
@@ -43,7 +50,9 @@ function App() {
         registerEmail,
         registerPassword
       );
-      updateProfile(auth.currentUser, { photoURL: { placeholder } });
+      updateProfile(auth.currentUser, {
+        photoURL: "./assets/images/placeholder.jpg",
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -51,7 +60,8 @@ function App() {
 
   const makeUsername = async () => {
     try {
-      updateProfile(auth.currentUser, { displayName: displayName });
+      await updateProfile(auth.currentUser, { displayName: displayName });
+      window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -93,8 +103,35 @@ function App() {
           makeUsername={makeUsername}
         />
       )}
+      {hideCreatePost && (
+        <CreatePost username={user.displayName} hide={hideCreate} />
+      )}
+      <div className="flex flex-col gap-4 items-center mt-4 w-screen -z-10">
+        {headerType && <AddPost pic={user?.photoURL} hideCreate={hideCreate} />}
+      </div>
     </div>
   );
 }
 
 export default App;
+
+function AddPost(props) {
+  return (
+    <div className="flex gap-2 items-center p-2 w-screen rounded-md border-2 border-opacity-90 border-solid md:w-1/4 border-offwhite bg-navy">
+      <img src={props.pic} className="w-8 h-8"></img>
+      <input
+        className="w-96 h-10 rounded-md border-2 border-opacity-90 border-solid bg-navy md:w-96 border-offwhite hover:border-opacity-100 active:border-opacity-100 text-offwhite placeholder:text-offwhite placeholder:text-opacity-80 placeholder:text-sm md:placeholder:text-base focus:border-offwhite hover:cursor-pointer"
+        placeholder="  Create Post"
+        onClick={props.hideCreate}
+      ></input>
+      <img
+        src={imageIcon}
+        className="w-10 h-10 rounded-md hover:cursor-pointer hover:bg-light-blue"
+      ></img>
+      <img
+        src={linkIcon}
+        className="w-10 h-10 rounded-md hover:cursor-pointer hover:bg-light-blue"
+      ></img>
+    </div>
+  );
+}

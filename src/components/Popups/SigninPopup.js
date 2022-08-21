@@ -3,8 +3,8 @@ import bg from "../assets/images/signUp.jpg";
 
 export default function SigninPopup(props) {
   return (
-    <div className="absolute top-0 w-screen h-screen -z-10">
-      <div className="flex sticky justify-center items-center w-screen h-screen">
+    <div className="absolute top-0 z-10 w-screen h-screen">
+      <div className="flex sticky justify-center items-center w-screen h-screen backdrop-blur-md backdrop-brightness-50">
         <div className="flex z-10 gap-2 items-start w-4/6 rounded-lg border-2 border-solid md:w-2/6 bg-offwhite border-navy">
           <img
             src={bg}
