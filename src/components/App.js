@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
 import SignInHeader from "./Headers/SignInHeader";
 import { auth } from "../firebase";
 import { updateProfile } from "firebase/auth";
@@ -14,6 +16,7 @@ import CreatePost from "./Create/CreatePost";
 import imageIcon from "./assets/icons/imageIcon.svg";
 import linkIcon from "./assets/icons/linkIcon.svg";
 import { Route, Routes } from "react-router-dom";
+import TextPostSnip from "./Community/TextPostSnip";
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -22,6 +25,17 @@ function App() {
   const [loginPassword, setLoginPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [hideCreatePost, sethideCreatePost] = useState(false);
+  const [posts, setPosts] = useState([]);
+
+  async function getPosts() {
+    const getList = await getDocs(collection(db, "posts"));
+    let newArr = [];
+    getList.forEach((post) => {
+      console.log(post.data());
+      newArr.push(post.data());
+    });
+    setPosts(newArr);
+  }
 
   const hideCreate = (event) => {
     sethideCreatePost((current) => !current);
@@ -42,6 +56,7 @@ function App() {
     if (user) {
       switchHeader(true);
     }
+    getPosts();
   }, [user]);
 
   const register = async () => {
@@ -114,6 +129,11 @@ function App() {
               {headerType && (
                 <AddPost pic={user?.photoURL} hideCreate={hideCreate} />
               )}
+              {posts.map((post) => (
+                <React.Fragment key={post.id}>
+                  <TextPostSnip post={post} />
+                </React.Fragment>
+              ))}
             </div>
           }
         />

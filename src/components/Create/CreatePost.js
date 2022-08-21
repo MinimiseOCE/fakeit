@@ -23,7 +23,7 @@ export default function CreatePost(props) {
   }
   // Set Post Data
   const postData = {
-    title: title.replace(/\s/g, ""),
+    title: title,
     bodyText: body,
     dateMade: Date.now(),
     postedOn: new Date(),
@@ -33,7 +33,6 @@ export default function CreatePost(props) {
 
   const makePost = async () => {
     try {
-      console.log(postData);
       await setDoc(
         doc(db, "posts", title.replace(/\s/g, "-") + postData.dateMade),
         postData
