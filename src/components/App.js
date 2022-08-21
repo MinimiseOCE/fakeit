@@ -15,8 +15,9 @@ import MakeUsername from "./Popups/MakeUsername";
 import CreatePost from "./Create/CreatePost";
 import imageIcon from "./assets/icons/imageIcon.svg";
 import linkIcon from "./assets/icons/linkIcon.svg";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import TextPostSnip from "./Community/TextPostSnip";
+import TextPost from "./Community/TextPost";
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -31,7 +32,6 @@ function App() {
     const getList = await getDocs(collection(db, "posts"));
     let newArr = [];
     getList.forEach((post) => {
-      console.log(post.data());
       newArr.push(post.data());
     });
     setPosts(newArr);
@@ -125,18 +125,25 @@ function App() {
         <Route
           path="/"
           element={
-            <div className="flex flex-col gap-4 items-center mt-4 w-screen -z-10">
+            <div className="flex flex-col gap-1 items-center mt-4 w-screen -z-10">
               {headerType && (
                 <AddPost pic={user?.photoURL} hideCreate={hideCreate} />
               )}
               {posts.map((post) => (
                 <React.Fragment key={post.id}>
-                  <TextPostSnip post={post} />
+                  <TextPostSnip post={post} />{" "}
                 </React.Fragment>
               ))}
             </div>
           }
         />
+        {posts.map((post) => (
+          <Route
+            path={`/r/${post.subreddit}/${post.dateMade}`}
+            key={post.id}
+            element={<TextPost post={post} />}
+          />
+        ))}
       </Routes>
     </div>
   );

@@ -4,6 +4,7 @@ import upvoteIcon from "../assets/icons/upvoteIcon.svg";
 import downvoteIcon from "../assets/icons/downvoteIcon.svg";
 import copyIcon from "../assets/icons/copyIcon.svg";
 import commentIcon from "../assets/icons/commentIcon.svg";
+import { Link } from "react-router-dom";
 
 export default function TextPostSnip(props) {
   const d = props.post.postedOn;
@@ -36,7 +37,8 @@ export default function TextPostSnip(props) {
   }, []);
 
   return (
-    <div
+    <Link
+      to={`/r/${props.post.subreddit}/${props.post.dateMade}`}
       className={`flex w-screen rounded-lg border-2 border-opacity-90 border-solid h-${bodyLength} hover:cursor-pointer hover:brightness-110 hover:border-opacity-100 md:w-1/4 border-offwhite bg-navy`}
     >
       <div className="flex flex-col flex-shrink-0 justify-start items-center pt-1 w-8 h-full overflow-clip rounded-l-lg bg-light-blue">
@@ -59,7 +61,7 @@ export default function TextPostSnip(props) {
             </span>
           </p>
           <h2 className="text-lg text-offwhite">
-            {props.post.title}
+            <b>{props.post.title}</b>
             <br></br>
           </h2>
           <p className="text-sm text-opacity-40 text-offwhite">
@@ -77,6 +79,6 @@ export default function TextPostSnip(props) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

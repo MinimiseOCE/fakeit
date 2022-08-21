@@ -6,6 +6,7 @@ import createIcon from "../assets/icons/createIcon.svg";
 import logoutIcon from "../assets/icons/logoutIcon.svg";
 import { useState } from "react";
 import CreateSubreddit from "../Create/CreateSubreddit";
+import { Link } from "react-router-dom";
 
 function Header(props) {
   const [showPopup, setShowPopup] = useState(false);
@@ -21,12 +22,15 @@ function Header(props) {
 
   return (
     <div className="flex justify-between items-center h-14 border-b-2 border-solid shadow-lg mw-screen bg-navy border-offwhite">
-      <div className="flex gap-1 items-center ml-5 hover:cursor-pointer">
+      <Link
+        to="/"
+        className="flex gap-1 items-center ml-5 hover:cursor-pointer"
+      >
         <img src={icon} alt="Logo" className="h-9"></img>
         <h1 className="hidden text-2xl text-offwhite font-title md:block">
           fakeit
         </h1>
-      </div>
+      </Link>
       <form className="flex items-center pr-16 h-8 rounded-md border-2 border-opacity-90 border-solid border-offwhite md:pr-64 hover:border-opacity-100 active:border-opacity-100">
         <img
           className="h-10 opacity-80 md:16"
