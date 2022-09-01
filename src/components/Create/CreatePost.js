@@ -29,6 +29,7 @@ export default function CreatePost(props) {
     postedOn: new Date(),
     author: props.user.displayName,
     subreddit: sub,
+    comments: 0,
   };
 
   const makePost = async () => {

@@ -15,9 +15,10 @@ import MakeUsername from "./Popups/MakeUsername";
 import CreatePost from "./Create/CreatePost";
 import imageIcon from "./assets/icons/imageIcon.svg";
 import linkIcon from "./assets/icons/linkIcon.svg";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import TextPostSnip from "./Community/TextPostSnip";
 import TextPost from "./Community/TextPost";
+import { UserContext } from "../contexts/UserContext";
 
 function App() {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -121,30 +122,32 @@ function App() {
         />
       )}
       {hideCreatePost && <CreatePost user={user} hide={hideCreate} />}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="flex flex-col gap-1 items-center mt-4 w-screen -z-10">
-              {headerType && (
-                <AddPost pic={user?.photoURL} hideCreate={hideCreate} />
-              )}
-              {posts.map((post) => (
-                <React.Fragment key={post.id}>
-                  <TextPostSnip post={post} />{" "}
-                </React.Fragment>
-              ))}
-            </div>
-          }
-        />
-        {posts.map((post) => (
+      <UserContext.Provider value={user}>
+        <Routes>
           <Route
-            path={`/r/${post.subreddit}/${post.dateMade}`}
-            key={post.id}
-            element={<TextPost post={post} />}
+            path="/"
+            element={
+              <div className="flex flex-col gap-1 items-center mt-4 w-screen -z-10">
+                {headerType && (
+                  <AddPost pic={user?.photoURL} hideCreate={hideCreate} />
+                )}
+                {posts.map((post) => (
+                  <React.Fragment key={post.id}>
+                    <TextPostSnip post={post} />{" "}
+                  </React.Fragment>
+                ))}
+              </div>
+            }
           />
-        ))}
-      </Routes>
+          {posts.map((post) => (
+            <Route
+              path={`/r/${post.subreddit}/${post.dateMade}`}
+              key={post.id}
+              element={<TextPost post={post} />}
+            />
+          ))}
+        </Routes>
+      </UserContext.Provider>
     </div>
   );
 }

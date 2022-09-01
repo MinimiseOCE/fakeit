@@ -41,7 +41,9 @@ export default function TextPostSnip(props) {
       to={`/r/${props.post.subreddit}/${props.post.dateMade}`}
       className={`flex w-screen rounded-lg border-2 border-opacity-90 border-solid h-${bodyLength} hover:cursor-pointer hover:brightness-110 hover:border-opacity-100 md:w-1/4 border-offwhite bg-navy`}
     >
-      <div className="flex flex-col flex-shrink-0 justify-start items-center pt-1 w-8 h-full overflow-clip rounded-l-lg bg-light-blue">
+      <div
+        className={`flex flex-col flex-shrink-0 justify-start items-center pt-1 w-8 overflow-clip rounded-l-lg h-${bodyLength} bg-light-blue`}
+      >
         <img
           className="flex-shrink-0 h-5 rounded hover:invert hover:bg-navy"
           src={upvoteIcon}
