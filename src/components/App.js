@@ -4,12 +4,11 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import SignInHeader from "./Headers/SignInHeader";
-import { auth } from "../firebase";
-import { updateProfile } from "firebase/auth";
 import Header from "./Headers/Header";
 import MakeUsername from "./Popups/MakeUsername";
 import CreatePost from "./Create/CreatePost";
