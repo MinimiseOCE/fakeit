@@ -6,14 +6,51 @@ import copyIcon from "../assets/icons/copyIcon.svg";
 import commentIcon from "../assets/icons/commentIcon.svg";
 import { UserContext } from "../../contexts/UserContext";
 import { useContext } from "react";
+import Comment from "./Comment";
+import { collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 
 export default function TextPost(props) {
+  const [body, setBody] = useState("");
   const user = useContext(UserContext);
   const d = props.post.postedOn;
   const c = new Date();
   const x = c.getTime();
   const mins = (x / 1000 - d.seconds) / 60;
   const [timeSince, setTimeSince] = useState("");
+  const [comments, setComments] = useState([]);
+
+  async function getComments() {
+    const getList = await getDocs(collection(db, "comments"));
+    let newArr = [];
+    getList.forEach((comment) => {
+      newArr.push(comment.data());
+    });
+    setComments(newArr);
+  }
+
+  // Set Comment Data
+  const commentData = {
+    post: `${props.post.subreddit}/${props.post.dateMade}`,
+    bodyText: body,
+    dateMade: Date.now(),
+    postedOn: new Date(),
+    author: user.displayName,
+    pfp: user.photoURL,
+    subreddit: props.post.subreddit,
+    replyto: `${props.post.subreddit}/${props.post.dateMade}`,
+  };
+
+  const makeComment = async () => {
+    try {
+      if (commentData.bodyText.length > 0) {
+        await addDoc(collection(db, "comments"), commentData);
+        window.location.reload();
+      } else console.log("Cannot post empty comments");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     if (mins > 1440) {
@@ -23,6 +60,8 @@ export default function TextPost(props) {
     } else {
       setTimeSince(mins.toFixed(0) + " minutes ago.");
     }
+
+    getComments();
   }, []);
 
   return (
@@ -70,9 +109,32 @@ export default function TextPost(props) {
             </div>
           </div>
         </div>
-        <div className="w-full">
-          <h2>Comment as {user.displayName}</h2>
+        <div className="flex flex-col justify-center items-center p-4 w-full">
+          <h2 className="text-offwhite">
+            Comment as <i>{user.displayName}</i>
+          </h2>
+          <div className="flex flex-col justify-center w-full rounded border-2 border-solid border-offwhite">
+            <textarea
+              type="text"
+              className="overflow-scroll w-5/6 h-12 rounded-lg md:h-24 text-offwhite bg-navy"
+              onChange={(event) => {
+                setBody(event.target.value);
+              }}
+            ></textarea>
+            <div className="flex justify-end items-center w-full h-10 bg-light-blue">
+              <button
+                className="pr-2 pl-2 mr-8 h-8 rounded-full text-navy bg-offwhite hover:brightness-110"
+                onClick={() => makeComment()}
+              >
+                Comment
+              </button>
+            </div>
+          </div>
         </div>
+        <h2 className="ml-4 text-offwhite">Comments</h2>
+        {comments.map((comment) => (
+          <Comment comment={comment} />
+        ))}
       </div>
     </div>
   );
